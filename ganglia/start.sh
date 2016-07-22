@@ -60,7 +60,15 @@ mkdir -p /var/lib/ganglia/rrds
 
 # make sure 'nobody' owns the rrds or else gmetad will complain (this is needed explicitly here, in
 # case a bind mount from the host is used, i.e. docker run -v /path/to:/var/lib/ganglia ...)
-chown -R nobody:nobody /var/lib/ganglia/rrds
+chown -R ganglia:ganglia /var/lib/ganglia/rrds
+
+echo $CLUSTER_ID 
+echo $HOST
+
+ls -l /etc/ganglia/
+cat /etc/ganglia/gmetad.conf
+sed -i s/__CLUSTER_ID__/$CLUSTER_ID/ /etc/ganglia/gmetad.conf
+sed -i s/__HOST__/$HOST/ /etc/ganglia/gmetad.conf
 
 # apply timezone if set
 [[ -n $TIMEZONE ]] && ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime

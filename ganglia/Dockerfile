@@ -57,6 +57,11 @@ RUN gmond -t \
 # add the start script
 ADD start.sh start.sh
 
+RUN echo "cache-bust"
+
+# add conf file
+ADD gmetad.conf /etc/ganglia/
+
 # entrypoint is the start script
 ENTRYPOINT ["bash","start.sh"]
 
